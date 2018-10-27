@@ -1,7 +1,7 @@
 # coding=utf-8
 import json
 import tarfile
-
+import base64
 
 def load_dot_vex(file_location):
     dot_vex_file = tarfile.open(file_location)
@@ -9,11 +9,16 @@ def load_dot_vex(file_location):
     dot_vex_file.close()
     with open(".\\temp\\___ThIsisATemPoRaRyFiLE___.json") as content:
         dot_vex_json: dict = json.load(content)
-        print((list(dot_vex_json.keys())))
+        print(dot_vex_json["files"])
+        for x in dot_vex_json["files"]:
+            with open(x,"wb") as file:
+                file.write(base64.b64decode(dot_vex_json["files"][x]))
+
+
 
 
 def main():
-    load_dot_vex("C:\\users\\13676\\Desktop\\V5_Robot_2\\Competition_control.vex")
+    load_dot_vex(input("file location?"))
     print("test end")
 
 
