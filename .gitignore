@@ -50,5 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#IDK
 .idea/workspace.xml
+
+#temp files
 temp/
+decoded/
