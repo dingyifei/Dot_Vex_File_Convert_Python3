@@ -7,7 +7,7 @@ import tarfile
 import base64
 import os
 
-DEFAULT_TEMP_FILE_LOCATION = ".\\temp"
+DEFAULT_TEMP_FILE_LOCATION = ".\\temp\\"
 
 
 def load_dot_vex(vex_file_location: str, save_folder_location: str):
@@ -19,7 +19,7 @@ def load_dot_vex(vex_file_location: str, save_folder_location: str):
     dot_vex_file = tarfile.open(vex_file_location)
     dot_vex_file.extractall(DEFAULT_TEMP_FILE_LOCATION)
     dot_vex_file.close()
-    with open(".\\temp\\___ThIsisATemPoRaRyFiLE___.json") as content:
+    with open(FAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json") as content:
         dot_vex_json: dict = json.load(content)
         print(dot_vex_json["files"])
         for x in dot_vex_json["files"]:
@@ -39,7 +39,7 @@ def update_dot_vex(
     dot_vex_file = tarfile.open(vex_file_location)
     dot_vex_file.extractall(DEFAULT_TEMP_FILE_LOCATION)
     dot_vex_file.close()
-    with open(DEFAULT_TEMP_FILE_LOCATION + "\\___ThIsisATemPoRaRyFiLE___.json") as content:
+    with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json") as content:
         dot_vex_json: dict = json.load(content)
         encode_files: list = os.listdir(vex_decode_folder_location)
         for x in encode_files:
@@ -48,13 +48,13 @@ def update_dot_vex(
                 y = base64.b64encode(y).decode("utf-8")
                 print(y)
                 dot_vex_json["files"][x] = y
-    os.remove(DEFAULT_TEMP_FILE_LOCATION + "\\___ThIsisATemPoRaRyFiLE___.json")
-    with open(DEFAULT_TEMP_FILE_LOCATION + "\\___ThIsisATemPoRaRyFiLE___.json", "w") as content:
+    os.remove(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json")
+    with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json", "w") as content:
         json.dump(dot_vex_json, content)
 
     os.remove(save_folder_location + save_file_name)
     dot_vex_save_file = tarfile.open(save_folder_location + save_file_name, "w")
-    dot_vex_save_file.add(DEFAULT_TEMP_FILE_LOCATION + "\\___ThIsisATemPoRaRyFiLE___.json"
+    dot_vex_save_file.add(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json"
                           , "___ThIsisATemPoRaRyFiLE___.json")
 
     dot_vex_save_file.close()
