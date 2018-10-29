@@ -28,6 +28,7 @@ def main():
     dot_vex_file_save_folder = str
     dot_vex_file_save_name = str
     status = "Nothing here yet"
+    progress = str
 
     # Column 1
     status_label = Label(mainframe, text="Status: ")
@@ -51,6 +52,12 @@ def main():
     dot_vex_file_save_name_label = Label(mainframe, text=".vex Save Name: ")
     dot_vex_file_save_name_label.grid(column=1, row=6, sticky=(W, N))
 
+    extract_decode_button = Button(mainframe, text="Extract and Decode", command=browse_button)
+    extract_decode_button.grid(column=1, row=7, sticky=(N, W))
+
+    progress_text_lable = Label(mainframe, text="Progress: ")
+    progress_text_lable.grid(column=1, row=8, sticky=(W, N))
+
     # Column 2
 
     status_show_label = Label(mainframe, text=status)
@@ -71,6 +78,12 @@ def main():
     dot_vex_file_save_name_entry = Entry(mainframe, width=15, textvariable=dot_vex_file_save_name)
     dot_vex_file_save_name_entry.grid(column=2, row=6, sticky=(N, W))
 
+    convert_dot_vex_button = Button(mainframe, text="Convert to .vex File", command=browse_button)
+    convert_dot_vex_button.grid(column=2, row=7, sticky=(N, E))
+
+    progress_log_lable = Label(mainframe, text=progress)
+    progress_log_lable.grid(column=2, row=8, sticky=(W, N))
+    
     # Column 3
 
     help_button = Button(mainframe, text="Help", command=browse_button)
