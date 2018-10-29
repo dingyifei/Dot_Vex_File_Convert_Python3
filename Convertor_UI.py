@@ -7,10 +7,6 @@ from tkinter import *
 from tkinter.filedialog import *
 
 
-def browse_button():
-    # filename = askdirectory()
-    print("This is reserved")
-    return "This is reserved"
 
 
 def main():
@@ -22,13 +18,11 @@ def main():
     root.rowconfigure(0, weight=1)
 
     # variables (Changeable)
-    code_folder = str
-    temp_folder = str
-    dot_vex_file_open = str
-    dot_vex_file_save_folder = str
-    dot_vex_file_save_name = str
-    status = "Nothing here yet"
-    progress = str
+    code_folder = StringVar()
+    temp_folder = StringVar()
+    dot_vex_file_open = StringVar()
+    dot_vex_file_save_folder = StringVar()
+    dot_vex_file_save_name = StringVar()
 
     # Column 1
     status_label = Label(mainframe, text="Status: ")
@@ -60,7 +54,7 @@ def main():
 
     # Column 2
 
-    status_show_label = Label(mainframe, text=status)
+    status_show_label = Label(mainframe, text="Nothing here yet")
     status_show_label.grid(column=2, row=1, sticky=(N, W))
 
     code_folder_entry = Entry(mainframe, width=15, textvariable=code_folder)
@@ -81,9 +75,9 @@ def main():
     convert_dot_vex_button = Button(mainframe, text="Convert to .vex File", command=browse_button)
     convert_dot_vex_button.grid(column=2, row=7, sticky=(N, E))
 
-    progress_log_lable = Label(mainframe, text=progress)
+    progress_log_lable = Label(mainframe, text="")
     progress_log_lable.grid(column=2, row=8, sticky=(W, N))
-    
+
     # Column 3
 
     help_button = Button(mainframe, text="Help", command=browse_button)
@@ -104,6 +98,10 @@ def main():
     # Start the window
     root.mainloop()
 
+def browse_button():
+    # filename = askdirectory()
+    print("This is reserved")
+    return "This is reserved"
 
 if __name__ == '__main__':
     main()
