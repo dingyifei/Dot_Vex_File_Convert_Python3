@@ -10,7 +10,7 @@ import os
 DEFAULT_TEMP_FILE_LOCATION = ".\\temp\\"
 
 
-def load_dot_vex(vex_file_location: str, save_folder_location: str):
+def extract_dot_vex(vex_file_location: str, save_folder_location: str):
     """
 
     :param vex_file_location: the .vex file location, should include the .vex file
@@ -19,7 +19,7 @@ def load_dot_vex(vex_file_location: str, save_folder_location: str):
     dot_vex_file = tarfile.open(vex_file_location)
     dot_vex_file.extractall(DEFAULT_TEMP_FILE_LOCATION)
     dot_vex_file.close()
-    with open(FAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json") as content:
+    with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json") as content:
         dot_vex_json: dict = json.load(content)
         print(dot_vex_json["files"])
         for x in dot_vex_json["files"]:
@@ -61,6 +61,9 @@ def update_dot_vex(
 
 
 def main():
+    """
+    I have no idea why someone try to run this and say it is not working....
+    """
     load_dot_vex(".\\V5_Robot_2\\Competition_control.vex", ".\\decoded\\")
     update_dot_vex(".\\V5_Robot_2\\Competition_control.vex", ".\\temp\\", "output.vex", ".\\decoded\\")
     print("test end")

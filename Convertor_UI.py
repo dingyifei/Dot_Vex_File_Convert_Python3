@@ -7,9 +7,8 @@ from tkinter import *
 from tkinter.filedialog import *
 
 
-
-
 def main():
+
     root = Tk()
     root.title("hello")
     mainframe = Frame(root)
@@ -46,11 +45,16 @@ def main():
     dot_vex_file_save_name_label = Label(mainframe, text=".vex Save Name: ")
     dot_vex_file_save_name_label.grid(column=1, row=6, sticky=(W, N))
 
-    extract_decode_button = Button(mainframe, text="Extract and Decode", command=browse_button)
+    def extract_decode():
+        progress_show_label["text"] = "extracting"
+        dot_vex_convert.extract_dot_vex(str(dot_vex_file_open), str(code_folder))
+        progress_show_label["text"] = "extract complete"
+
+    extract_decode_button = Button(mainframe, text="Extract and Decode", command=extract_decode)
     extract_decode_button.grid(column=1, row=7, sticky=(N, W))
 
-    progress_text_lable = Label(mainframe, text="Progress: ")
-    progress_text_lable.grid(column=1, row=8, sticky=(W, N))
+    progress_text_label = Label(mainframe, text="Progress: ")
+    progress_text_label.grid(column=1, row=8, sticky=(W, N))
 
     # Column 2
 
@@ -72,11 +76,16 @@ def main():
     dot_vex_file_save_name_entry = Entry(mainframe, width=15, textvariable=dot_vex_file_save_name)
     dot_vex_file_save_name_entry.grid(column=2, row=6, sticky=(N, W))
 
-    convert_dot_vex_button = Button(mainframe, text="Convert to .vex File", command=browse_button)
+    def convert_to_dot_vex():
+        progress_show_label["text"] = "converting"
+        dot_vex_convert.update_dot_vex(str(dot_vex_file_open), str(dot_vex_file_save_folder), str(dot_vex_file_save_name), str(code_folder))
+        progress_show_label["text"] = "convert complete"
+
+    convert_dot_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
     convert_dot_vex_button.grid(column=2, row=7, sticky=(N, E))
 
-    progress_log_lable = Label(mainframe, text="")
-    progress_log_lable.grid(column=2, row=8, sticky=(W, N))
+    progress_show_label = Label(mainframe, text="")
+    progress_show_label.grid(column=2, row=8, sticky=(W, N))
 
     # Column 3
 
@@ -98,10 +107,12 @@ def main():
     # Start the window
     root.mainloop()
 
+
 def browse_button():
     # filename = askdirectory()
     print("This is reserved")
     return "This is reserved"
+
 
 if __name__ == '__main__':
     main()
