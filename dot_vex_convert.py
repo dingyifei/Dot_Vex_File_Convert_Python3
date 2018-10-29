@@ -64,7 +64,7 @@ def main():
     """
     I have no idea why someone try to run this and say it is not working....
     """
-    load_dot_vex(".\\V5_Robot_2\\Competition_control.vex", ".\\decoded\\")
+    extract_dot_vex(".\\V5_Robot_2\\Competition_control.vex", ".\\decoded\\")
     update_dot_vex(".\\V5_Robot_2\\Competition_control.vex", ".\\temp\\", "output.vex", ".\\decoded\\")
     print("test end")
 
