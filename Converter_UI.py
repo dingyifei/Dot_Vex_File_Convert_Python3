@@ -18,6 +18,7 @@ def main():
     root.rowconfigure(0, weight=1)
 
     # variables (Changeable)
+    config = configparser
     code_folder = StringVar()
     temp_folder = StringVar()
     vex_open = StringVar()
@@ -128,9 +129,11 @@ def main():
 
 #----------------------------------------------------------------------------------------------------------
     #load or create config file
-    def config():
+    def load_config():
         print("some configuration is here")
-
+        
+    def save_config():
+        print("config saved")
     #When close
     def window_close():
         print("mic check!")
@@ -141,7 +144,7 @@ def main():
 
     root.protocol("WM_DELETE_WINDOW", window_close)
     # Start the window
-    config()
+    load_config()
     root.mainloop()
 
 
