@@ -7,7 +7,6 @@ from tkinter.filedialog import *
 
 
 def main():
-
     root = Tk()
     root.title(".vex Converter")
     mainframe = Frame(root)
@@ -21,7 +20,6 @@ def main():
     vex_open = StringVar()
     vex_save_folder = StringVar()
     vex_save_name = StringVar()
-
 
     # Column 1
     status_label = Label(mainframe, text="Status: ")
@@ -42,7 +40,6 @@ def main():
     vex_save_name_label = Label(mainframe, text=".vex Save Name: ")
     vex_save_name_label.grid(column=1, row=6, sticky=(W, N))
 
-
     def extract_decode():
         progress_show_label["text"] = "extracting"
         dot_vex_convert.extract_dot_vex(vex_open.get(), code_folder.get())
@@ -58,7 +55,6 @@ def main():
 
     status_show_label = Label(mainframe, text="Nothing here yet")
     status_show_label.grid(column=2, row=1, sticky=(N, W))
-
 
     code_folder_entry = Entry(mainframe, width=15, textvariable=code_folder)
     code_folder_entry.grid(column=2, row=2, sticky=(N, W))
@@ -77,7 +73,7 @@ def main():
 
     def convert_to_dot_vex():
         progress_show_label["text"] = "converting"
-        dot_vex_convert.update_dot_vex(str(vex_open), str(vex_save_folder), str(vex_save_name), str(code_folder))
+        dot_vex_convert.update_dot_vex(vex_open.get(), vex_save_folder.get(), vex_save_name.get(), code_folder.get())
         progress_show_label["text"] = "convert complete"
 
     convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
@@ -92,11 +88,11 @@ def main():
         help_window = Tk()
         help_window.title("Help")
         help_frame = Frame(help_window)
-        help_frame.grid(column = 0, row = 0, sticky = (N, W, E, S))
+        help_frame.grid(column=0, row=0, sticky=(N, W, E, S))
         help_frame.columnconfigure(0, weight=1)
         help_frame.rowconfigure(0, weight=1)
-        help_label = Label(help_frame, text = "this is the test text for helping window \n this is the test text \n this is the test text")
-        help_label.grid(column = 1, row = 1, sticky = (N,E,W,S))
+        help_label = Label(help_frame, text="this is the test text for helping window \n this is the test text")
+        help_label.grid(column=1, row=1, sticky=(N, E, W, S))
         help_frame.mainloop()
 
     help_button = Button(mainframe, text="Help", command=get_help)
@@ -115,7 +111,7 @@ def main():
     temp_folder_button.grid(column=3, row=3, sticky=(N, E))
 
     def vex_open_ask():
-        vex_open.set(askopenfilename(filetypes=[("Vex files","*.vex")]))
+        vex_open.set(askopenfilename(filetypes=[("Vex files", "*.vex")]))
 
     vex_open_button = Button(mainframe, text="Browse", command=vex_open_ask)
     vex_open_button.grid(column=3, row=4, sticky=(N, E))
