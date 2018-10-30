@@ -47,9 +47,11 @@ def update_dot_vex(
     os.remove(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json")
     with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json", "w") as content:
         json.dump(dot_vex_json, content)
-
-    os.remove(save_folder_location + save_file_name)
-    dot_vex_save_file = tarfile.open(save_folder_location + save_file_name, "w")
+    try:
+        os.remove(save_folder_location + "/" + save_file_name)
+    except:
+        print("did not remove or something happend")
+    dot_vex_save_file = tarfile.open(save_folder_location + "/" +save_file_name, "w")
     dot_vex_save_file.add(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json"
                           , "___ThIsisATemPoRaRyFiLE___.json")
 
