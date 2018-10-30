@@ -7,7 +7,7 @@ import tarfile
 import base64
 import os
 
-DEFAULT_TEMP_FILE_LOCATION = ".\\temp\\"
+DEFAULT_TEMP_FILE_LOCATION = "./temp/"
 
 
 def extract_dot_vex(vex_file_location: str, save_folder_location: str):
@@ -60,8 +60,8 @@ def main():
     """
     I have no idea why someone try to run this and say it is not working....
     """
-    extract_dot_vex(".\\V5_Robot_2\\Competition_control.vex", ".\\decoded\\")
-    update_dot_vex(".\\V5_Robot_2\\Competition_control.vex", ".\\temp\\", "output.vex", ".\\decoded\\")
+    extract_dot_vex("./V5_Robot_2/Competition_control.vex", "./decoded/")
+    update_dot_vex("./V5_Robot_2/Competition_control.vex", "./temp/", "output.vex", "./decoded/")
     print("test end")
 
 

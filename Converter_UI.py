@@ -18,7 +18,6 @@ def main():
     root.rowconfigure(0, weight=1)
 
     # variables (Changeable)
-    config = configparser
     code_folder = StringVar()
     temp_folder = StringVar()
     vex_open = StringVar()
@@ -129,22 +128,55 @@ def main():
 
 #----------------------------------------------------------------------------------------------------------
     #load or create config file
+    config = configparser.ConfigParser()
     def load_config():
-        print("some configuration is here")
-        
+        if os.path.isfile("./vex_convert.ini"):
+            config.read(filenames="./vex_convert.ini")
+            try:
+                code_folder.set(config["DEFAULT"]["code_folder"])
+                temp_folder.set(config["DEFAULT"]["temp_folder"])
+                vex_open.set(config["DEFAULT"]["vex_open"])
+                vex_save_folder.set(config["DEFAULT"]["vex_save_folder"])
+                vex_save_name.set(config["DEFAULT"]["vex_save_name"])
+            except:
+                create_config()
+                load_config()
+        else:
+            create_config()
+    def create_config():
+        if os.path.isfile("./vex_convert.ini"):
+            os.remove("./vex_convert.ini")
+        config["DEFAULT"] = {
+            "code_folder" : "",
+            "temp_folder" : "./temp/",
+            "vex_open" : "",
+            "vex_save_folder" : "",
+            "vex_save_name" : ""
+        }
+        with open("./vex_convert.ini", "w") as configfile:
+            config.write(configfile)
+
     def save_config():
-        print("config saved")
+        config["DEFAULT"] = {
+            "code_folder": code_folder.get(),
+            "temp_folder": temp_folder.get(),
+            "vex_open": vex_open.get(),
+            "vex_save_folder": vex_save_folder.get(),
+            "vex_save_name": vex_save_name.get()
+        }
+        with open("./vex_convert.ini", "w") as configfile:
+            config.write(configfile)
+
     #When close
     def window_close():
-        print("mic check!")
-        # save the config
-        # make sure it is not doing things
-        root.destroy()
 
+        save_config()
+        root.destroy()
 
     root.protocol("WM_DELETE_WINDOW", window_close)
     # Start the window
     load_config()
+    print("load_config")
     root.mainloop()
 
 
