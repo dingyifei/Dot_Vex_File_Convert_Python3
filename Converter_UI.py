@@ -2,8 +2,11 @@
 
 import dot_vex_convert
 import os
+import configparser
+import logging
 from tkinter import *
 from tkinter.filedialog import *
+from tkinter import messagebox
 
 
 def main():
@@ -61,6 +64,7 @@ def main():
 
     temp_folder_entry = Entry(mainframe, width=15, textvariable=temp_folder)
     temp_folder_entry.grid(column=2, row=3, sticky=(N, W))
+
 
     vex_open_entry = Entry(mainframe, width=15, textvariable=vex_open)
     vex_open_entry.grid(column=2, row=4, sticky=(N, W))
@@ -122,14 +126,25 @@ def main():
     vex_save_folder_button = Button(mainframe, text="Browse", command=vex_save_folder_ask)
     vex_save_folder_button.grid(column=3, row=5, sticky=(N, E))
 
+#----------------------------------------------------------------------------------------------------------
+    #load or create config file
+    def config():
+        print("some configuration is here")
+
+    #When close
+    def window_close():
+        print("mic check!")
+        # save the config
+        # make sure it is not doing things
+        root.destroy()
+
+
+    root.protocol("WM_DELETE_WINDOW", window_close)
     # Start the window
+    config()
     root.mainloop()
 
 
-def browse_button():
-    # filename = askdirectory()
-    print("This is reserved")
-    return "This is reserved"
 
 
 if __name__ == '__main__':
