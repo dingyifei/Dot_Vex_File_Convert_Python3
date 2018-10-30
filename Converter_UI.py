@@ -18,12 +18,11 @@ def main():
     # variables (Changeable)
     code_folder = StringVar()
     temp_folder = StringVar()
-    dot_vex_file_open = StringVar()
-    dot_vex_file_save_folder = StringVar()
-    dot_vex_file_save_name = StringVar()
+    vex_open = StringVar()
+    vex_save_folder = StringVar()
+    vex_save_name = StringVar()
 
-    def test_filedialog():
-        print((askopenfile()))
+
     # Column 1
     status_label = Label(mainframe, text="Status: ")
     status_label.grid(column=1, row=1, sticky=(W, N))
@@ -34,21 +33,19 @@ def main():
     temp_folder_label = Label(mainframe, text="Temp Folder: ")
     temp_folder_label.grid(column=1, row=3, sticky=(W, N))
 
-    dot_vex_file_open_label = Label(mainframe, text=".vex Open: ")
-    dot_vex_file_open_label.grid(column=1, row=4, sticky=(W, N))
+    vex_open_label = Label(mainframe, text=".vex Open: ")
+    vex_open_label.grid(column=1, row=4, sticky=(W, N))
 
-    dot_vex_file_save_folder_label = Label(mainframe, text=".vex Save Folder: ")
-    dot_vex_file_save_folder_label.grid(column=1, row=5, sticky=(W, N))
+    vex_save_folder_label = Label(mainframe, text=".vex Save Folder: ")
+    vex_save_folder_label.grid(column=1, row=5, sticky=(W, N))
 
-    dot_vex_file_save_name_label = Label(mainframe, text=".vex Save Name: ")
-    dot_vex_file_save_name_label.grid(column=1, row=6, sticky=(W, N))
+    vex_save_name_label = Label(mainframe, text=".vex Save Name: ")
+    vex_save_name_label.grid(column=1, row=6, sticky=(W, N))
 
-    dot_vex_file_save_name_label = Label(mainframe, text=".vex Save Name: ")
-    dot_vex_file_save_name_label.grid(column=1, row=6, sticky=(W, N))
 
     def extract_decode():
         progress_show_label["text"] = "extracting"
-        dot_vex_convert.extract_dot_vex(str(dot_vex_file_open), str(code_folder))
+        dot_vex_convert.extract_dot_vex(str(vex_open), str(code_folder))
         progress_show_label["text"] = "extract complete"
 
     extract_decode_button = Button(mainframe, text="Extract and Decode", command=extract_decode)
@@ -62,28 +59,29 @@ def main():
     status_show_label = Label(mainframe, text="Nothing here yet")
     status_show_label.grid(column=2, row=1, sticky=(N, W))
 
+
     code_folder_entry = Entry(mainframe, width=15, textvariable=code_folder)
     code_folder_entry.grid(column=2, row=2, sticky=(N, W))
 
     temp_folder_entry = Entry(mainframe, width=15, textvariable=temp_folder)
     temp_folder_entry.grid(column=2, row=3, sticky=(N, W))
 
-    dot_vex_file_open_entry = Entry(mainframe, width=15, textvariable=dot_vex_file_open)
-    dot_vex_file_open_entry.grid(column=2, row=4, sticky=(N, W))
+    vex_open_entry = Entry(mainframe, width=15, textvariable=vex_open)
+    vex_open_entry.grid(column=2, row=4, sticky=(N, W))
 
-    dot_vex_file_save_folder_entry = Entry(mainframe, width=15, textvariable=dot_vex_file_save_folder)
-    dot_vex_file_save_folder_entry.grid(column=2, row=5, sticky=(N, W))
+    vex_save_folder_entry = Entry(mainframe, width=15, textvariable=vex_save_folder)
+    vex_save_folder_entry.grid(column=2, row=5, sticky=(N, W))
 
-    dot_vex_file_save_name_entry = Entry(mainframe, width=15, textvariable=dot_vex_file_save_name)
-    dot_vex_file_save_name_entry.grid(column=2, row=6, sticky=(N, W))
+    vex_save_name_entry = Entry(mainframe, width=15, textvariable=vex_save_name)
+    vex_save_name_entry.grid(column=2, row=6, sticky=(N, W))
 
     def convert_to_dot_vex():
         progress_show_label["text"] = "converting"
-        dot_vex_convert.update_dot_vex(str(dot_vex_file_open), str(dot_vex_file_save_folder), str(dot_vex_file_save_name), str(code_folder))
+        dot_vex_convert.update_dot_vex(str(vex_open), str(vex_save_folder), str(vex_save_name), str(code_folder))
         progress_show_label["text"] = "convert complete"
 
-    convert_dot_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
-    convert_dot_vex_button.grid(column=2, row=7, sticky=(N, E))
+    convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
+    convert_vex_button.grid(column=2, row=7, sticky=(N, E))
 
     progress_show_label = Label(mainframe, text="")
     progress_show_label.grid(column=2, row=8, sticky=(W, N))
@@ -104,17 +102,29 @@ def main():
     help_button = Button(mainframe, text="Help", command=get_help)
     help_button.grid(column=3, row=1, sticky=(N, E))
 
-    code_folder_button = Button(mainframe, text="Browse", command=test_filedialog)
+    def code_folder_ask():
+        code_folder.set(askdirectory())
+
+    code_folder_button = Button(mainframe, text="Browse", command=code_folder_ask)
     code_folder_button.grid(column=3, row=2, sticky=(N, E))
 
-    temp_folder_button = Button(mainframe, text="Browse", command=browse_button)
+    def temp_folder_ask():
+        temp_folder.set(askdirectory())
+
+    temp_folder_button = Button(mainframe, text="Browse", command=temp_folder_ask)
     temp_folder_button.grid(column=3, row=3, sticky=(N, E))
 
-    dot_vex_file_open_button = Button(mainframe, text="Browse", command=browse_button)
-    dot_vex_file_open_button.grid(column=3, row=4, sticky=(N, E))
+    def vex_open_ask():
+        vex_open.set(askopenfilename())
 
-    dot_vex_file_save_name_button = Button(mainframe, text="Browse", command=browse_button)
-    dot_vex_file_save_name_button.grid(column=3, row=5, sticky=(N, E))
+    vex_open_button = Button(mainframe, text="Browse", command=vex_open_ask)
+    vex_open_button.grid(column=3, row=4, sticky=(N, E))
+
+    def vex_save_folder_ask():
+        vex_save_folder.set(askdirectory())
+
+    vex_save_folder_button = Button(mainframe, text="Browse", command=vex_save_folder_ask)
+    vex_save_folder_button.grid(column=3, row=5, sticky=(N, E))
 
     # Start the window
     root.mainloop()
