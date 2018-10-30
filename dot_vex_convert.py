@@ -21,9 +21,8 @@ def extract_dot_vex(vex_file_location: str, save_folder_location: str):
     dot_vex_file.close()
     with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json") as content:
         dot_vex_json: dict = json.load(content)
-        print(dot_vex_json["files"])
         for x in dot_vex_json["files"]:
-            with open(save_folder_location + x, "wb") as file:
+            with open(save_folder_location + "/" + x, "wb") as file:
                 file.write(base64.b64decode(dot_vex_json["files"][x]))
 
 
@@ -44,10 +43,7 @@ def update_dot_vex(
         encode_files: list = os.listdir(vex_decode_folder_location)
         for x in encode_files:
             with open(vex_decode_folder_location + x, "rb") as file:
-                y = file.read()
-                y = base64.b64encode(y).decode("utf-8")
-                print(y)
-                dot_vex_json["files"][x] = y
+                dot_vex_json["files"][x] = base64.b64encode(file.read()).decode("utf-8")
     os.remove(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json")
     with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json", "w") as content:
         json.dump(dot_vex_json, content)

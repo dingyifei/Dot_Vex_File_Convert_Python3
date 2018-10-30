@@ -45,7 +45,7 @@ def main():
 
     def extract_decode():
         progress_show_label["text"] = "extracting"
-        dot_vex_convert.extract_dot_vex(str(vex_open), str(code_folder))
+        dot_vex_convert.extract_dot_vex(vex_open.get(), code_folder.get())
         progress_show_label["text"] = "extract complete"
 
     extract_decode_button = Button(mainframe, text="Extract and Decode", command=extract_decode)
@@ -115,7 +115,7 @@ def main():
     temp_folder_button.grid(column=3, row=3, sticky=(N, E))
 
     def vex_open_ask():
-        vex_open.set(askopenfilename())
+        vex_open.set(askopenfilename(filetypes=[("Vex files","*.vex")]))
 
     vex_open_button = Button(mainframe, text="Browse", command=vex_open_ask)
     vex_open_button.grid(column=3, row=4, sticky=(N, E))
