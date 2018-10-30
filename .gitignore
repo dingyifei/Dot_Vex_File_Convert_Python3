@@ -63,3 +63,7 @@ __pycache__/dot_vex_convert.cpython-37.pyc
 .vscode/settings.json
 testing/
 vex_convert.ini
+*.spec
+dist/
+build/
+*.pyc
