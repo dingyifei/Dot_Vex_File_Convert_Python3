@@ -59,3 +59,5 @@ temp/
 decoded/
 .~lock.grid.ods#
 __pycache__/dot_vex_convert.cpython-37.pyc
+.vscode/launch.json
+.vscode/settings.json

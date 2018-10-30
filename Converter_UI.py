@@ -2,7 +2,6 @@
 
 import dot_vex_convert
 import os
-
 from tkinter import *
 from tkinter.filedialog import *
 
@@ -10,7 +9,7 @@ from tkinter.filedialog import *
 def main():
 
     root = Tk()
-    root.title("hello")
+    root.title(".vex Converter")
     mainframe = Frame(root)
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
     root.columnconfigure(0, weight=1)
@@ -23,6 +22,8 @@ def main():
     dot_vex_file_save_folder = StringVar()
     dot_vex_file_save_name = StringVar()
 
+    def test_filedialog():
+        print((askopenfile()))
     # Column 1
     status_label = Label(mainframe, text="Status: ")
     status_label.grid(column=1, row=1, sticky=(W, N))
@@ -89,10 +90,21 @@ def main():
 
     # Column 3
 
-    help_button = Button(mainframe, text="Help", command=browse_button)
+    def get_help():
+        help_window = Tk()
+        help_window.title("Help")
+        help_frame = Frame(help_window)
+        help_frame.grid(column = 0, row = 0, sticky = (N, W, E, S))
+        help_frame.columnconfigure(0, weight=1)
+        help_frame.rowconfigure(0, weight=1)
+        help_label = Label(help_frame, text = "this is the test text for helping window \n this is the test text \n this is the test text")
+        help_label.grid(column = 1, row = 1, sticky = (N,E,W,S))
+        help_frame.mainloop()
+
+    help_button = Button(mainframe, text="Help", command=get_help)
     help_button.grid(column=3, row=1, sticky=(N, E))
 
-    code_folder_button = Button(mainframe, text="Browse", command=browse_button)
+    code_folder_button = Button(mainframe, text="Browse", command=test_filedialog)
     code_folder_button.grid(column=3, row=2, sticky=(N, E))
 
     temp_folder_button = Button(mainframe, text="Browse", command=browse_button)
