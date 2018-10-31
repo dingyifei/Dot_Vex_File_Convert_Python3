@@ -45,17 +45,21 @@ def main():
 
     def extract_decode():
         progress_show_label["text"] = "extracting"
+        if temp_folder.get() != "":
+            dot_vex_convert.DEFAULT_TEMP_FILE_LOCATION = temp_folder.get()
         dot_vex_convert.extract_dot_vex(vex_open.get(), code_folder.get())
         progress_show_label["text"] = "extract complete"
 
     extract_decode_button = Button(mainframe, text="Extract and Decode", command=extract_decode)
     extract_decode_button.grid(column=1, row=7, sticky=(N, W))
 
+    convert_type_checkbox = Checkbutton(mainframe, text="Convert between Vex C++ and C++ Pro during encode")
+    convert_type_checkbox.grid(column=1,row=8, sticky=(W, N))
+
     progress_text_label = Label(mainframe, text="Progress: ")
-    progress_text_label.grid(column=1, row=8, sticky=(W, N))
+    progress_text_label.grid(column=1, row=9, sticky=(W, N))
 
     # Column 2
-
     status_show_label = Label(mainframe, text="Nothing here yet")
     status_show_label.grid(column=2, row=1, sticky=(N, W))
 
@@ -77,6 +81,8 @@ def main():
 
     def convert_to_dot_vex():
         progress_show_label["text"] = "converting"
+        if temp_folder.get != "":
+            dot_vex_convert.DEFAULT_TEMP_FILE_LOCATION = temp_folder.get()
         dot_vex_convert.update_dot_vex(vex_open.get(), vex_save_folder.get(), vex_save_name.get(), code_folder.get())
         progress_show_label["text"] = "convert complete"
 
@@ -84,7 +90,7 @@ def main():
     convert_vex_button.grid(column=2, row=7, sticky=(N, E))
 
     progress_show_label = Label(mainframe, text="")
-    progress_show_label.grid(column=2, row=8, sticky=(W, N))
+    progress_show_label.grid(column=2, row=9, sticky=(W, N))
 
     # Column 3
 
@@ -169,17 +175,13 @@ def main():
 
     #When close
     def window_close():
-
         save_config()
         root.destroy()
 
     root.protocol("WM_DELETE_WINDOW", window_close)
     # Start the window
     load_config()
-    print("load_config")
     root.mainloop()
-
-
 
 
 if __name__ == '__main__':
