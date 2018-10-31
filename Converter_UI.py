@@ -23,6 +23,7 @@ def main():
     vex_open = StringVar()
     vex_save_folder = StringVar()
     vex_save_name = StringVar()
+    replace = BooleanVar()
 
     # Column 1
     status_label = Label(mainframe, text="Status: ")
@@ -53,8 +54,8 @@ def main():
     extract_decode_button = Button(mainframe, text="Extract and Decode", command=extract_decode)
     extract_decode_button.grid(column=1, row=7, sticky=(N, W))
 
-    convert_type_checkbox = Checkbutton(mainframe, text="Convert between Vex C++ and C++ Pro during encode")
-    convert_type_checkbox.grid(column=1,row=8, sticky=(W, N))
+    convert_type_checkbox = Checkbutton(mainframe, text="Convert between Vex C++ \n and C++ Pro during encode")
+    convert_type_checkbox.grid(column=1, row=8, sticky=(W, N))
 
     progress_text_label = Label(mainframe, text="Progress: ")
     progress_text_label.grid(column=1, row=9, sticky=(W, N))
@@ -68,7 +69,6 @@ def main():
 
     temp_folder_entry = Entry(mainframe, width=15, textvariable=temp_folder)
     temp_folder_entry.grid(column=2, row=3, sticky=(N, W))
-
 
     vex_open_entry = Entry(mainframe, width=15, textvariable=vex_open)
     vex_open_entry.grid(column=2, row=4, sticky=(N, W))
@@ -88,6 +88,22 @@ def main():
 
     convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
     convert_vex_button.grid(column=2, row=7, sticky=(N, E))
+
+    def replace_command():
+        if replace.get() == True:
+            head, tail = os.path.split(vex_open.get())
+            vex_save_name.set(tail)
+            vex_save_folder.set(head)
+            vex_save_folder_button["state"] = "disabled"
+            vex_save_folder_entry["state"] = "disabled"
+            vex_save_name_entry["state"] = "disabled"
+        if replace.get()== False:
+            vex_save_folder_button["state"] = "normal"
+            vex_save_folder_entry["state"] = "normal"
+            vex_save_name_entry["state"] = "normal"
+
+    replace_checkbox = Checkbutton(mainframe, text="replace old .vex file", command = replace_command, variable = replace)
+    replace_checkbox.grid(column=2, row=8, sticky=(W, N))
 
     progress_show_label = Label(mainframe, text="")
     progress_show_label.grid(column=2, row=9, sticky=(W, N))
@@ -122,6 +138,11 @@ def main():
 
     def vex_open_ask():
         vex_open.set(askopenfilename(filetypes=[("Vex files", "*.vex")]))
+        if replace.get() == True:
+            replace_command()
+        else:
+            head, tail = os.path.split(vex_open.get())
+            vex_save_name.set(tail)
 
     vex_open_button = Button(mainframe, text="Browse", command=vex_open_ask)
     vex_open_button.grid(column=3, row=4, sticky=(N, E))
@@ -132,9 +153,10 @@ def main():
     vex_save_folder_button = Button(mainframe, text="Browse", command=vex_save_folder_ask)
     vex_save_folder_button.grid(column=3, row=5, sticky=(N, E))
 
-#----------------------------------------------------------------------------------------------------------
-    #load or create config file
+    # ----------------------------------------------------------------------------------------------------------
+    # load or create config file
     config = configparser.ConfigParser()
+
     def load_config():
         if os.path.isfile("./vex_convert.ini"):
             config.read(filenames="./vex_convert.ini")
@@ -144,20 +166,23 @@ def main():
                 vex_open.set(config["DEFAULT"]["vex_open"])
                 vex_save_folder.set(config["DEFAULT"]["vex_save_folder"])
                 vex_save_name.set(config["DEFAULT"]["vex_save_name"])
+                replace.set(config["DEFAULT"]["replace"])
             except:
                 create_config()
                 load_config()
         else:
             create_config()
+
     def create_config():
         if os.path.isfile("./vex_convert.ini"):
             os.remove("./vex_convert.ini")
         config["DEFAULT"] = {
-            "code_folder" : "",
-            "temp_folder" : "./temp/",
-            "vex_open" : "",
-            "vex_save_folder" : "",
-            "vex_save_name" : ""
+            "code_folder": "",
+            "temp_folder": "./temp/",
+            "vex_open": "",
+            "vex_save_folder": "",
+            "vex_save_name": "",
+            "replace": "False"
         }
         with open("./vex_convert.ini", "w") as configfile:
             config.write(configfile)
@@ -168,12 +193,13 @@ def main():
             "temp_folder": temp_folder.get(),
             "vex_open": vex_open.get(),
             "vex_save_folder": vex_save_folder.get(),
-            "vex_save_name": vex_save_name.get()
+            "vex_save_name": vex_save_name.get(),
+            "replace": replace.get()
         }
         with open("./vex_convert.ini", "w") as configfile:
             config.write(configfile)
 
-    #When close
+    # When close
     def window_close():
         save_config()
         root.destroy()
