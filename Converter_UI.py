@@ -45,10 +45,9 @@ def main():
 	vex_save_name_label.grid(column=1, row=6, sticky=(W, N))
 
 	def extract_decode():
-		progress_show_label["text"] = "extracting"
 		if temp_folder.get() != "":
 			dot_vex_convert.DEFAULT_TEMP_FILE_LOCATION = temp_folder.get()
-		dot_vex_convert.extract_dot_vex(vex_open.get(), code_folder.get())
+		dot_vex_convert.extract_dot_vex(vex_open.get(), code_folder.get(), progress_show_label.set)
 		progress_show_label["text"] = "extract complete"
 
 	extract_decode_button = Button(
@@ -89,8 +88,9 @@ def main():
 		dot_vex_convert.update_dot_vex(
 			vex_open.get(),
 			vex_save_folder.get(),
-			 vex_save_name.get(),
-			 code_folder.get())
+			vex_save_name.get(),
+			code_folder.get(),
+			progress_show_label.set)
 		progress_show_label["text"] = "convert complete"
 		
 	convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
