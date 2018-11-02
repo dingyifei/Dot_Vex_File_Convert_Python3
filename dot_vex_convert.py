@@ -7,10 +7,9 @@ import tarfile
 import base64
 import os
 
-DEFAULT_TEMP_FILE_LOCATION = "./temp/"
 
 
-def extract_dot_vex(vex_file_location: str, save_folder_location: str, progress):
+def extract_dot_vex(vex_file_location: str, save_folder_location: str,temp_location, progress):
     """
 
     :param vex_file_location: the .vex file location, should include the .vex file
@@ -20,10 +19,10 @@ def extract_dot_vex(vex_file_location: str, save_folder_location: str, progress)
 
     progress("extracting json from .vex tar file")
     dot_vex_file = tarfile.open(vex_file_location)
-    dot_vex_file.extractall(DEFAULT_TEMP_FILE_LOCATION)
+    dot_vex_file.extractall(temp_location)
     dot_vex_file.close()
     progress("file extracted, loading json")
-    with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json") as content:
+    with open(temp_location + "/___ThIsisATemPoRaRyFiLE___.json") as content:
         dot_vex_json: dict = json.load(content)
         if not os.path.isdir(save_folder_location):
             os.mkdir(save_folder_location)
@@ -31,13 +30,14 @@ def extract_dot_vex(vex_file_location: str, save_folder_location: str, progress)
         for x in dot_vex_json["files"]:
             with open(save_folder_location + "/" + x, "wb") as file:
                 file.write(base64.b64decode(dot_vex_json["files"][x]))
-        progress(len(dot_vex_json["files"]), "Files extracted from .vex")
+        progress(str(len(dot_vex_json["files"])) + "Files extracted from .vex")
 
 
 def update_dot_vex(vex_file_location: str,
                    save_folder_location: str,
                    save_file_name: str,
                    vex_decode_folder_location: str,
+                   temp_location,
                    progress=print
                    ):
     """
@@ -51,12 +51,12 @@ def update_dot_vex(vex_file_location: str,
 
     progress("extracting json from .vex tar file")
     dot_vex_file = tarfile.open(vex_file_location)
-    dot_vex_file.extractall(DEFAULT_TEMP_FILE_LOCATION)
+    dot_vex_file.extractall(temp_location)
     dot_vex_file.close()
     if not os.path.isdir(save_folder_location):
         os.mkdir(save_folder_location)
     progress("loading json")
-    with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json") as content:
+    with open(temp_location + "/___ThIsisATemPoRaRyFiLE___.json") as content:
         dot_vex_json: dict = json.load(content)
         encode_files: list = os.listdir(vex_decode_folder_location)
         progress("replacing file inside json")
@@ -64,8 +64,8 @@ def update_dot_vex(vex_file_location: str,
             with open(vex_decode_folder_location + x, "rb") as file:
                 dot_vex_json["files"][x] = base64.b64encode(file.read()).decode("utf-8")
     progress("replace the json file")
-    os.remove(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json")
-    with open(DEFAULT_TEMP_FILE_LOCATION + "___ThIsisATemPoRaRyFiLE___.json", "w") as content:
+    os.remove(temp_location + "/___ThIsisATemPoRaRyFiLE___.json")
+    with open(temp_location + "/___ThIsisATemPoRaRyFiLE___.json", "w") as content:
         json.dump(dot_vex_json, content)
     try:
         os.remove(save_folder_location + "/" + save_file_name)
@@ -73,9 +73,9 @@ def update_dot_vex(vex_file_location: str,
         progress("we don't need to remove the json file")
     dot_vex_save_file = tarfile.open(save_folder_location + "/" + save_file_name, "w")
     dot_vex_save_file.add(
-        DEFAULT_TEMP_FILE_LOCATION +
-        "___ThIsisATemPoRaRyFiLE___.json",
-        "___ThIsisATemPoRaRyFiLE___.json")
+        temp_location +
+        "/___ThIsisATemPoRaRyFiLE___.json",
+        "/___ThIsisATemPoRaRyFiLE___.json")
 
     dot_vex_save_file.close()
     progress("replace/update .vex file complete")

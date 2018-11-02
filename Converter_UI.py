@@ -24,6 +24,7 @@ def main():
     vex_save_folder = StringVar()
     vex_save_name = StringVar()
     replace = BooleanVar()
+    progress = StringVar()
 
     # Column 1
     status_label = Label(mainframe, text="Status: ")
@@ -46,9 +47,8 @@ def main():
 
     def extract_decode():
         if temp_folder.get() != "":
-            dot_vex_convert.DEFAULT_TEMP_FILE_LOCATION = temp_folder.get()
-        dot_vex_convert.extract_dot_vex(vex_open.get(), code_folder.get(), progress_show_label)
-        progress_show_label["text"] = "extract complete"
+            dot_vex_convert.temp_location = temp_folder.get()
+        dot_vex_convert.extract_dot_vex(vex_open.get(), code_folder.get(),temp_folder.get(), progress.set)
 
     extract_decode_button = Button(
         mainframe, text="Extract and Decode", command=extract_decode)
@@ -83,13 +83,14 @@ def main():
 
     def convert_to_dot_vex():
         if temp_folder.get != "":
-            dot_vex_convert.DEFAULT_TEMP_FILE_LOCATION = temp_folder.get()
+            dot_vex_convert.temp_location = temp_folder.get()
         dot_vex_convert.update_dot_vex(
             vex_open.get(),
             vex_save_folder.get(),
             vex_save_name.get(),
             code_folder.get(),
-            progress_show_label["text"])
+            temp_folder.get(),
+            progress.set)
 
     convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
     convert_vex_button.grid(column=2, row=7, sticky=(N, E))
@@ -111,7 +112,7 @@ def main():
                                    text="replace old .vex file", command=replace_command, variable=replace)
     replace_checkbox.grid(column=2, row=8, sticky=(W, N))
 
-    progress_show_label = Label(mainframe, text="")
+    progress_show_label = Label(mainframe, textvariable = progress)
     progress_show_label.grid(column=2, row=9, sticky=(W, N))
 
     # Column 3
