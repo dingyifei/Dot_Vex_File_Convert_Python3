@@ -24,10 +24,10 @@ I create this project so I can decode the .vex file's very professional ___ThIsi
 The `extract and decode` requires `.vex open`, `temp folder`, `code folder`(where the decoded files are going to save). **DO NOT USE THE SAME FOLDER!!**
 
 
-
 The `Convert to .vex File` requires `.vex open`, `temp folder`, `code folder`, `.Vex save folder`,`.vex  save name` . **DO NOT USE THE SAME FOLDER!!**
 
-
+please make sure the files are not in use....
+if 
 
 A safe replace will be coming soon.
 
