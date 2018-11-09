@@ -13,6 +13,7 @@ I create this project so I can decode the .vex file's very professional ___ThIsi
 - All the browse
 - load and save config automatically
 - Replace
+- Safe mode(rename the .vex file to .backup)
 
 ## The not working things:
 

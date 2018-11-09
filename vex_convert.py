@@ -24,7 +24,6 @@ def extract_vex(vex_file_location: str, temp_location: str, progress):
     progress("json extracted")
 
 
-
 def pack_vex(save_folder_location: str, save_file_name: str, temp_location: str, progress):
     """
 
@@ -94,25 +93,6 @@ def main():
     I have no idea why someone try to run this and say it is not working....
     """
     print("IT IS NOT WORKING")
-    # print(
-    #     "You are running it in the console, it have less feature than the converter_ui \n try converter_ui.py")
-    #
-    # mode = input("do you want to extract a .vex file (choose 1), or update a .vex file (Choose 2)?")
-    # if mode == 1:
-    #     vex_file = input("vex file location?")
-    #     save_dir = input("where do you want save the files?")
-    #     extract_dot_vex(vex_file, save_dir, print)
-    #
-    # elif mode == 2:
-    #     vex_file = input("vex file location?")
-    #     save_dir = input("where do you want save the files?")
-    #     save_name = input("save name?")
-    #     open_dir = input("What do you want to save into the vex file?")
-    #     update_dot_vex(vex_file, save_dir, save_name, open_dir)
-    #
-    # else:
-    #     print("handle weird input is just annoying")
-
 
 if __name__ == '__main__':
     main()

@@ -59,7 +59,7 @@ def main():
     extract_decode_button.grid(column=1, row=7, sticky=(N, W))
 
     convert_type_checkbox = Checkbutton(
-        mainframe, text="Convert between Vex C++ \n and C++ Pro during encode")
+        mainframe, text="convert")
     convert_type_checkbox.grid(column=1, row=8, sticky=(W, N))
 
     progress_text_label = Label(mainframe, text="Progress: ")
@@ -67,22 +67,22 @@ def main():
 
     # Column 2
     status_show_label = Label(mainframe, text="Nothing here yet")
-    status_show_label.grid(column=2, row=1, sticky=(N, W))
+    status_show_label.grid(column=2, row=1, sticky=(W, E))
 
-    code_folder_entry = Entry(mainframe, width=30, textvariable=code_folder)
-    code_folder_entry.grid(column=2, row=2, sticky=(N, W))
+    code_folder_entry = Entry(mainframe, textvariable=code_folder)
+    code_folder_entry.grid(column=2, row=2, sticky=(E, W))
 
-    temp_folder_entry = Entry(mainframe, width=30, textvariable=temp_folder)
-    temp_folder_entry.grid(column=2, row=3, sticky=(N, W))
+    temp_folder_entry = Entry(mainframe, textvariable=temp_folder)
+    temp_folder_entry.grid(column=2, row=3, sticky=(E, W))
 
-    vex_open_entry = Entry(mainframe, width=30, textvariable=vex_open)
-    vex_open_entry.grid(column=2, row=4, sticky=(N, W))
+    vex_open_entry = Entry(mainframe, textvariable=vex_open)
+    vex_open_entry.grid(column=2, row=4, sticky=(E, W))
 
-    vex_save_folder_entry = Entry(mainframe, width=30, textvariable=vex_save_folder)
-    vex_save_folder_entry.grid(column=2, row=5, sticky=(N, W))
+    vex_save_folder_entry = Entry(mainframe, textvariable=vex_save_folder)
+    vex_save_folder_entry.grid(column=2, row=5, sticky=(E, W))
 
-    vex_save_name_entry = Entry(mainframe, width=30, textvariable=vex_save_name)
-    vex_save_name_entry.grid(column=2, row=6, sticky=(N, W))
+    vex_save_name_entry = Entry(mainframe, textvariable=vex_save_name)
+    vex_save_name_entry.grid(column=2, row=6, sticky=(E, W))
 
     def convert_to_dot_vex():
         if temp_folder.get == "":
@@ -102,7 +102,7 @@ def main():
         vex_convert.pack_vex(vex_save_folder.get(), vex_save_name.get(), temp_folder.get(), progress.set)
 
     convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
-    convert_vex_button.grid(column=2, row=7, sticky=(N, E))
+    convert_vex_button.grid(column=2, row=7, sticky=(W, E))
 
     def replace_command():
         if replace.get() is True:
@@ -234,14 +234,19 @@ def main():
 
     root.protocol("WM_DELETE_WINDOW", window_close)
 
-    #Status Check
+    # Status Check
     def status_check():
         while True:
             if code_folder.get() != "" and temp_folder.get() != "" and vex_open.get() != "" and vex_save_folder.get() != "" and vex_save_name.get() != "":
                 status_show_label["text"] = "Ready"
+                convert_vex_button["state"] = "normal"
+                extract_decode_button["state"] = "normal"
             else:
-               status_show_label["text"] = "something is not right"
+                status_show_label["text"] = "Not Ready"
+                convert_vex_button["state"] = "disabled"
+                extract_decode_button["state"] = "disabled"
             time.sleep(0.5)
+
     status_checker = threading.Thread(target=status_check)
 
     # Start the window
