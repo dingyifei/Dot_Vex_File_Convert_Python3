@@ -89,6 +89,16 @@ def main():
             temp_folder.set("./temp/")
         vex_convert.extract_vex(vex_open.get(), temp_folder.get(), progress.set)
         vex_convert.update_json(code_folder.get(), temp_folder.get(), progress.set)
+        if safe.get() is True:
+            try:
+                current_folder = os.getcwd()
+                os.chdir(vex_save_folder.get())
+                if os.path.isfile(vex_save_name.get() + ".backup"):
+                    os.remove(vex_save_name.get() + ".backup")
+                os.rename(vex_save_name.get(), vex_save_name.get() + ".backup")
+                os.chdir(current_folder)
+            except:
+                progress.set("Did not rename old file")
         vex_convert.pack_vex(vex_save_folder.get(), vex_save_name.get(), temp_folder.get(), progress.set)
 
     convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)

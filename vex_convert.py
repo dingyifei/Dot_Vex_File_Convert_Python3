@@ -21,6 +21,8 @@ def extract_vex(vex_file_location: str, temp_location: str, progress):
     progress("extracting json from .vex tar file")
     with tarfile.open(vex_file_location) as vex_file:
         vex_file.extractall(temp_location)
+    progress("json extracted")
+
 
 
 def pack_vex(save_folder_location: str, save_file_name: str, temp_location: str, progress):
@@ -36,12 +38,13 @@ def pack_vex(save_folder_location: str, save_file_name: str, temp_location: str,
     except:
         progress("Not a replace or it is a error")
 
-    progress("extracting json from .vex tar file")
+    progress("pack json into .vex")
     with tarfile.open(save_folder_location + "/" + save_file_name, "w") as vex_file:
         vex_file.add(
             temp_location +
             "/___ThIsisATemPoRaRyFiLE___.json",
             "/___ThIsisATemPoRaRyFiLE___.json")
+    progress("packing done!")
 
 
 def decode_json(code_folder_location: str, temp_location: str, progress):
@@ -74,7 +77,7 @@ def update_json(code_folder: str, temp_location: str, progress):
         encode_files: list = os.listdir(code_folder)
         progress("replacing file inside json")
         for x in encode_files:
-            with open(code_folder + x, "rb") as file:
+            with open(code_folder + "/" + x, "rb") as file:
                 dot_vex_json["files"][x] = base64.b64encode(file.read()).decode("utf-8")
     progress("replace the json file")
     try:

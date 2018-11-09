@@ -67,3 +67,4 @@ vex_convert.ini
 dist/
 build/
 *.pyc
+Competition_control.vex.backup
