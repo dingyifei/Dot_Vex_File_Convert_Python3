@@ -59,7 +59,7 @@ def main():
     extract_decode_button.grid(column=1, row=7, sticky=(N, W))
 
     convert_type_checkbox = Checkbutton(
-        mainframe, text="convert")
+        mainframe, text="something")
     convert_type_checkbox.grid(column=1, row=8, sticky=(W, N))
 
     progress_text_label = Label(mainframe, text="Progress: ")
@@ -135,8 +135,8 @@ def main():
         help_frame.rowconfigure(0, weight=1)
         help_label = Label(
             help_frame,
-            text="this is the test text for helping window \n this is the test text")
-        help_label.grid(column=1, row=1, sticky=(N, E, W, S))
+            text="1. Use seperate folder \n 2. make sure files are not occupied \n 3. use github to submit bug reports")
+        help_label.grid(column=1, row=1, sticky=(N, W, S))
         help_frame.mainloop()
 
     help_button = Button(mainframe, text="Help", command=get_help)
@@ -172,10 +172,8 @@ def main():
         mainframe, text="Browse", command=vex_save_folder_ask)
     vex_save_folder_button.grid(column=3, row=5, sticky=(N, E))
 
-    def safe_command():
-        print("something is here")
 
-    safe_checkbox = Checkbutton(mainframe, text="safe", command=safe_command, variable=safe)
+    safe_checkbox = Checkbutton(mainframe, text="safe", variable=safe)
     safe_checkbox.grid(column=3, row=8, sticky=W)
 
     # ----------------------------------------------------------------------------------------------------------
@@ -238,9 +236,12 @@ def main():
     def status_check():
         while True:
             if code_folder.get() != "" and temp_folder.get() != "" and vex_open.get() != "" and vex_save_folder.get() != "" and vex_save_name.get() != "":
-                status_show_label["text"] = "Ready"
-                convert_vex_button["state"] = "normal"
-                extract_decode_button["state"] = "normal"
+                if code_folder.get() == temp_folder.get() or code_folder.get() == vex_save_folder.get() or temp_folder.get() == vex_save_folder.get():
+                    status_show_label["text"] = "You can not use the same folder"
+                else:
+                    status_show_label["text"] = "Ready"
+                    convert_vex_button["state"] = "normal"
+                    extract_decode_button["state"] = "normal"
             else:
                 status_show_label["text"] = "Not Ready"
                 convert_vex_button["state"] = "disabled"
