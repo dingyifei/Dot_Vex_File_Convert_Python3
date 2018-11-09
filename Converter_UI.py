@@ -1,9 +1,11 @@
 # coding=utf-8
 
 import vex_convert
+import time
 import os
 import configparser
 import logging
+import threading
 from tkinter import *
 from tkinter.filedialog import *
 from tkinter import messagebox
@@ -163,7 +165,7 @@ def main():
     def safe_command():
         print("something is here")
 
-    safe_checkbox = Checkbutton(mainframe, text="replace old .vex file", command=safe_command, variable=safe)
+    safe_checkbox = Checkbutton(mainframe, text="safe", command=safe_command, variable=safe)
     safe_checkbox.grid(column=3, row=8, sticky=W)
 
     # ----------------------------------------------------------------------------------------------------------
@@ -222,12 +224,25 @@ def main():
 
     root.protocol("WM_DELETE_WINDOW", window_close)
 
+    #Status Check
+    def status_check():
+        while True:
+            if code_folder.get() != "" and temp_folder.get() != "" and vex_open.get() != "" and vex_save_folder.get() != "" and vex_save_name.get() != "":
+                status_show_label["text"] = "Ready"
+            else:
+               status_show_label["text"] = "something is not right"
+            time.sleep(0.5)
+    status_checker = threading.Thread(target=status_check)
+
     # Start the window
+
     load_config()
     if replace.get() is True:
         vex_save_folder_button["state"] = "disabled"
         vex_save_folder_entry["state"] = "disabled"
         vex_save_name_entry["state"] = "disabled"
+
+    status_checker.start()
     root.mainloop()
 
 
