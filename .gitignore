@@ -62,3 +62,10 @@ __pycache__/dot_vex_convert.cpython-37.pyc
 .vscode/launch.json
 .vscode/settings.json
 /.Dot_Vex_Convert.py.icloud
+testing/
+vex_convert.ini
+*.spec
+dist/
+build/
+*.pyc
+Competition_control.vex.backup
