@@ -10,8 +10,6 @@ from tkinter import *
 from tkinter.filedialog import *
 from tkinter import messagebox
 
-print(messagebox.askokcancel("Warning:Check File", "The Code files are newer than the .vex, proceed?"))
-
 
 def main():
     root = Tk()
@@ -122,7 +120,7 @@ def main():
                 convert()
             else:
                 progress.set("cancel")
-        else:    
+        else:
             convert()
 
     convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
