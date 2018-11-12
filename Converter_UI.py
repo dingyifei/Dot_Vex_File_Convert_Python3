@@ -10,6 +10,8 @@ from tkinter import *
 from tkinter.filedialog import *
 from tkinter import messagebox
 
+print(messagebox.askokcancel("Warning:Check File", "The Code files are newer than the .vex, proceed?"))
+
 
 def main():
     root = Tk()
@@ -49,10 +51,20 @@ def main():
     vex_save_name_label.grid(column=1, row=6, sticky=(W, N))
 
     def extract_decode():
-        if temp_folder.get() != "":
-            vex_convert.temp_location = temp_folder.get()
-        vex_convert.extract_vex(vex_open.get(), temp_folder.get(), progress.set)
-        vex_convert.decode_json(code_folder.get(), temp_folder.get(), progress.set)
+        vex_time = os.stat(vex_open.get()).st_ctime_ns
+        code_time = 0
+        for x in os.listdir(code_folder.get()):
+            if os.stat(code_folder.get() + "/" + x).st_ctime_ns >= code_time:
+                code_time = os.stat(code_folder.get() + "/" + x).st_ctime_ns
+        if code_time > vex_time:
+            if messagebox.askokcancel("Warning:Check File", "The Code files are newer than the .vex, proceed?"):
+                vex_convert.extract_vex(vex_open.get(), temp_folder.get(), progress.set)
+                vex_convert.decode_json(code_folder.get(), temp_folder.get(), progress.set)
+            else:
+                progress.set("cancel")
+        else:
+            vex_convert.extract_vex(vex_open.get(), temp_folder.get(), progress.set)
+            vex_convert.decode_json(code_folder.get(), temp_folder.get(), progress.set)
 
     extract_decode_button = Button(
         mainframe, text="Extract and Decode", command=extract_decode)
@@ -85,21 +97,33 @@ def main():
     vex_save_name_entry.grid(column=2, row=6, sticky=(E, W))
 
     def convert_to_dot_vex():
-        if temp_folder.get == "":
-            temp_folder.set("./temp/")
-        vex_convert.extract_vex(vex_open.get(), temp_folder.get(), progress.set)
-        vex_convert.update_json(code_folder.get(), temp_folder.get(), progress.set)
-        if safe.get() is True:
-            try:
-                current_folder = os.getcwd()
-                os.chdir(vex_save_folder.get())
-                if os.path.isfile(vex_save_name.get() + ".backup"):
-                    os.remove(vex_save_name.get() + ".backup")
-                os.rename(vex_save_name.get(), vex_save_name.get() + ".backup")
-                os.chdir(current_folder)
-            except:
-                progress.set("Did not rename old file")
-        vex_convert.pack_vex(vex_save_folder.get(), vex_save_name.get(), temp_folder.get(), progress.set)
+
+        def convert():
+            vex_convert.extract_vex(vex_open.get(), temp_folder.get(), progress.set)
+            vex_convert.update_json(code_folder.get(), temp_folder.get(), progress.set)
+            if safe.get() is True:
+                try:
+                    current_folder = os.getcwd()
+                    os.chdir(vex_save_folder.get())
+                    if os.path.isfile(vex_save_name.get() + ".backup"):
+                        os.remove(vex_save_name.get() + ".backup")
+                    os.rename(vex_save_name.get(), vex_save_name.get() + ".backup")
+                    os.chdir(current_folder)
+                except:
+                    progress.set("Did not rename old file")
+            vex_convert.pack_vex(vex_save_folder.get(), vex_save_name.get(), temp_folder.get(), progress.set)
+        vex_time = os.stat(vex_open.get()).st_ctime_ns
+        code_time = 0
+        for x in os.listdir(code_folder.get()):
+            if os.stat(code_folder.get() + "/" + x).st_ctime_ns >= code_time:
+                code_time = os.stat(code_folder.get() + "/" + x).st_ctime_ns
+        if code_time > vex_time:
+            if messagebox.askokcancel("Warning:Check File", "The Code files are older than the .vex, proceed?"):
+                convert()
+            else:
+                progress.set("cancel")
+        else:    
+            convert()
 
     convert_vex_button = Button(mainframe, text="Convert to .vex File", command=convert_to_dot_vex)
     convert_vex_button.grid(column=2, row=7, sticky=(W, E))
