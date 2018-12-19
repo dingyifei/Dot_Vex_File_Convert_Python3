@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{923302ff-b89a-45a2-9936-5b82a719c214}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>Converter_UI.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>Global|PythonCore|3.7</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="dist\Converter_UI\tk\images\logo100.gif" />
+    <Content Include="dist\Converter_UI\tk\images\logo64.gif" />
+    <Content Include="dist\Converter_UI\tk\images\logoLarge.gif" />
+    <Content Include="dist\Converter_UI\tk\images\logoMed.gif" />
+    <Content Include="dist\Converter_UI\tk\images\pwrdLogo100.gif" />
+    <Content Include="dist\Converter_UI\tk\images\pwrdLogo150.gif" />
+    <Content Include="dist\Converter_UI\tk\images\pwrdLogo175.gif" />
+    <Content Include="dist\Converter_UI\tk\images\pwrdLogo200.gif" />
+    <Content Include="dist\Converter_UI\tk\images\pwrdLogo75.gif" />
+    <Content Include="dist\Converter_UI\tk\images\tai-ku.gif" />
+    <Content Include="screenshots\screenshot.png" />
+    <Content Include="vex_convert.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converter_UI.py" />
+    <Compile Include="vex_convert.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dist\" />
+    <Folder Include="dist\Converter_UI\" />
+    <Folder Include="dist\Converter_UI\tk\" />
+    <Folder Include="dist\Converter_UI\tk\images" />
+    <Folder Include="screenshots" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.7" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
